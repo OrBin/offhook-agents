@@ -26,6 +26,7 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/SearchResults"
+
   /download:
     post:
       tags:
@@ -101,6 +102,7 @@ definitions:
           - "gcc"
           - "gcc-0:4.8.5-39.el7.x86_64"
           description: "Package name or NEVRA"
+
   DownloadRequest:
     type: "object"
     required:
@@ -119,6 +121,7 @@ definitions:
         - "submitted"
         - "downloading"
         - "done"
+
   SearchResult:
     type: "object"
     required:
@@ -142,4 +145,3 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/SearchResult"
-
