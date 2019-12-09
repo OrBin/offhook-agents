@@ -3,24 +3,50 @@ info:
   version: "0.1.0"
   title: "Offhook agent API"
 paths:
-  -
+  /search:
+    post:
+      tags:
+      - "search"
+      summary: "Search for packages"
+      operationId: "search"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/DownloadSpec"
+
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/SearchResults"
 definitions:
   DownloadSpec:
     type: "object"
-    #required:
+    required:
+    - "source"
+    - "os"
+    - "packages"
     properties:
       source:
         type: "string"
-        format: "yum"
+        example: "yum"
       os:
         type: "string"
-        format: "linux"
+        example: "linux"
       osVariant:
         type: "string"
-        format: "RHEL7"
+        example: "RHEL7"
       architecture:
         type: "string"
-        format: "x86_64"
+        example: "x86_64"
       packages:
         type: "array"
         items:
@@ -28,10 +54,34 @@ definitions:
           example: "gcc"
   DownloadRequest:
     type: "object"
-    #required:
+    required:
+    - "id"
+    - "spec"
     properties:
       id:
         type: "integer"
         format: "int64"
       spec:
         $ref: "#/definitions/DownloadSpec"
+  SearchResult:
+    type: "object"
+    required:
+    - "name"
+    - "nevraString"
+    properties:
+      name:
+        type: "string"
+        example: "gcc"
+      nevraString:
+        type: "string"
+        example: "gcc-0:4.8.5-39.el7.x86_64"
+        description: "NEVRA (Name, Epoch, Version, Revision, Architecture) of the package"
+  SearchResults:
+    type: "object"
+    required:
+    - "results"
+    properties:
+      results:
+        type: "array"
+        items:
+          $ref: "#/definitions/SearchResult"
