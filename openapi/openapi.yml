@@ -120,6 +120,7 @@ definitions:
         enum:
         - "submitted"
         - "downloading"
+        - "packaging"
         - "done"
 
   SearchResult:
