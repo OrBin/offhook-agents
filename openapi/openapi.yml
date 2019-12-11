@@ -138,6 +138,7 @@ definitions:
     - "id"
     - "spec"
     - "status"
+    - "isConsumable"
     properties:
       id:
         type: "integer"
@@ -146,11 +147,12 @@ definitions:
         $ref: "#/definitions/DownloadSpec"
       status:
         type: "string"
-        enum:
-        - "submitted"
-        - "downloading"
-        - "packaging"
-        - "done"
+        description: |
+          Request status to display for the user.
+          CAUTION: Do not rely on this for any computation!
+      isConsumable:
+        type: "boolean"
+        description: "Whether the requested files are ready for download or not"
 
   SearchResult:
     type: "object"
