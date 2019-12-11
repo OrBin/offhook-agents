@@ -10,6 +10,17 @@ while getopts "d:l:" opt; do
   esac
 done
 
+# Validate inputs
+if [ -z "${output_dir+x}" ]; then
+    echo 'Option -d missing (should specify an output directory)' >&2
+    exit 1
+fi
+
+if [ -z "${language+x}" ]; then
+    echo 'Option -l missing (should specify language for the generated server)' >&2
+    exit 1
+fi
+
 # Convert to absolute paths
 output_dir=$(readlink -f $output_dir)
 openapi_file=$(readlink -f ./openapi/openapi.yml)
