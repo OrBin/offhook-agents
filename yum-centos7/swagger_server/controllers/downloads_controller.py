@@ -1,5 +1,3 @@
-import six
-
 from swagger_server.models.download_request import DownloadRequest  # noqa: E501
 from swagger_server.models.download_spec import DownloadSpec  # noqa: E501
 from swagger_server import util
@@ -7,7 +5,7 @@ from .base_controller import BaseController
 
 class DownloadsController(BaseController):
 
-    def get_download_files(requestId):  # noqa: E501
+    def get_download_files(self, requestId):  # noqa: E501
         """Get files from a download request
 
          # noqa: E501
@@ -23,7 +21,7 @@ class DownloadsController(BaseController):
         return 'do some magic!'
 
 
-    def get_download_request(requestId):  # noqa: E501
+    def get_download_request(self, requestId):  # noqa: E501
         """Get a download request
 
          # noqa: E501
@@ -36,7 +34,7 @@ class DownloadsController(BaseController):
         return 'do some magic!'
 
 
-    def submit_download_request():  # noqa: E501
+    def submit_download_request(self):  # noqa: E501
         """Submit a download request
 
          # noqa: E501
@@ -49,6 +47,6 @@ class DownloadsController(BaseController):
         return 'do some magic!'
 
     def add_url_rules(self):
-        self._add_url_rule('/', DownloadsController.submit_download_request, methods=['POST'])
-        self._add_url_rule('/<requestId>', DownloadsController.get_download_request, methods=['GET'])
-        self._add_url_rule('/<requestId>/files', DownloadsController.get_download_files, methods=['GET'])
+        self._add_url_rule('/', self.submit_download_request, methods=['POST'])
+        self._add_url_rule('/<requestId>', self.get_download_request, methods=['GET'])
+        self._add_url_rule('/<requestId>/files', self.get_download_files, methods=['GET'])

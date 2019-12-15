@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from flask import Flask
 from .controllers.downloads_controller import DownloadsController
 from .controllers.search_controller import SearchController

@@ -7,7 +7,7 @@ from .base_controller import BaseController
 
 class SearchController(BaseController):
 
-    def search():  # noqa: E501
+    def search(self):  # noqa: E501
         """Search for packages
 
          # noqa: E501
@@ -20,4 +20,4 @@ class SearchController(BaseController):
         return 'do some magic!'
 
     def add_url_rules(self):
-        self._add_url_rule('/', SearchController.search, methods=['POST'])
+        self._add_url_rule('/', self.search, methods=['POST'])

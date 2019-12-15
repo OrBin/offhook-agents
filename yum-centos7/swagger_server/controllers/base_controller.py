@@ -1,7 +1,8 @@
-from abc import ABC, abstractmethod
+from abc import ABCMeta, abstractmethod
 
 
-class BaseController(ABC):
+class BaseController:
+    __metaclass__ = ABCMeta
 
     def __init__(self, app, base_path):
         self.__app = app
