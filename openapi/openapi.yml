@@ -127,10 +127,10 @@ definitions:
         type: "array"
         items:
           type: "string"
-          example:
-          - "gcc"
-          - "gcc-0:4.8.5-39.el7.x86_64"
           description: "Package name or NEVRA"
+        example:
+        - "gcc"
+        - "gcc-0:4.8.5-39.el7.x86_64"
 
   DownloadRequest:
     type: "object"
