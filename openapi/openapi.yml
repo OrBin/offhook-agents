@@ -25,7 +25,7 @@ paths:
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/SearchResults"
+              $ref: "#/definitions/SearchResult"
 
   /download:
     post:
@@ -167,13 +167,3 @@ definitions:
         type: "string"
         example: "gcc-0:4.8.5-39.el7.x86_64"
         description: "NEVRA (Name, Epoch, Version, Revision, Architecture) of the package"
-
-  SearchResults:
-    type: "object"
-    required:
-    - "results"
-    properties:
-      results:
-        type: "array"
-        items:
-          $ref: "#/definitions/SearchResult"
