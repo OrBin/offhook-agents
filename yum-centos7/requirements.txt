@@ -1,0 +1,2 @@
+typing == 3.5.2.2
+setuptools >= 21.0.0
