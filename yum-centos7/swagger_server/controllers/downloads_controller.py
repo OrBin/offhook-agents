@@ -1,9 +1,9 @@
 from swagger_server.models.download_request import DownloadRequest  # noqa: E501
 from swagger_server.models.download_spec import DownloadSpec  # noqa: E501
 from swagger_server import util
-from .base_controller import BaseController
+from .yum_base_controller import YumBaseController
 
-class DownloadsController(BaseController):
+class DownloadsController(YumBaseController):
 
     def get_download_files(self, requestId):  # noqa: E501
         """Get files from a download request

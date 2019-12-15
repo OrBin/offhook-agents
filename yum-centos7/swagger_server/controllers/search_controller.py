@@ -1,11 +1,11 @@
 
 from swagger_server.models.download_spec import DownloadSpec  # noqa: E501
 from swagger_server.models.search_results import SearchResults  # noqa: E501
-from .base_controller import BaseController
+from .yum_base_controller import YumBaseController
 #from swagger_server import util
 
 
-class SearchController(BaseController):
+class SearchController(YumBaseController):
 
     def search(self):  # noqa: E501
         """Search for packages
