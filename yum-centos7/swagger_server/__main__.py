@@ -1,5 +1,4 @@
 from flask import Flask
-import yum
 from .controllers.downloads_controller import DownloadsController
 from .controllers.search_controller import SearchController
 

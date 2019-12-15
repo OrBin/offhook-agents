@@ -3,7 +3,6 @@ from flask import request, jsonify
 from yum.Errors import PackageSackError
 from ..models.download_spec import DownloadSpec  # noqa: E501
 from .base_controller import BaseController
-#from swagger_server import util
 
 
 class SearchController(BaseController):
