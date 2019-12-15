@@ -5,17 +5,15 @@ from .controllers.search_controller import SearchController
 
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 
 controller_pairs = [
     ('/search', SearchController),
     ('/download', DownloadsController),
 ]
 
-yum_base = yum.YumBase()
-yum_base.setCacheDir()
-
 for route, klass in controller_pairs:
-    controller = klass(app, route, yum_base)
+    controller = klass(app, route)
     controller.add_url_rules()
 
 
