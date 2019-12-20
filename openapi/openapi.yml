@@ -87,12 +87,6 @@ paths:
         required: true
         type: "integer"
         format: "int64"
-      - name: "fileType"
-        in: "query"
-        type: "string"
-        description: "The file type to compress the packages into"
-        enum:
-        - "7z"
       responses:
         200:
           description: "A compressed file containing the downloaded packages"
@@ -153,6 +147,12 @@ definitions:
       isConsumable:
         type: "boolean"
         description: "Whether the requested files are ready for download or not"
+      compressedFileType:
+        type: "string"
+        description: "The file type to compress the packages into"
+        enum:
+        - "7z"
+        default: "7z"
 
   SearchResult:
     type: "object"

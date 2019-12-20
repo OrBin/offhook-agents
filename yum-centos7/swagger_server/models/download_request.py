@@ -15,7 +15,7 @@ class DownloadRequest(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, id=None, spec=None, status=None, is_consumable=None):  # noqa: E501
+    def __init__(self, id=None, spec=None, status=None, is_consumable=None, compressed_file_type='7z'):  # noqa: E501
         """DownloadRequest - a model defined in Swagger
 
         :param id: The id of this DownloadRequest.  # noqa: E501
@@ -26,25 +26,30 @@ class DownloadRequest(Model):
         :type status: str
         :param is_consumable: The is_consumable of this DownloadRequest.  # noqa: E501
         :type is_consumable: bool
+        :param compressed_file_type: The compressed_file_type of this DownloadRequest.  # noqa: E501
+        :type compressed_file_type: str
         """
         self.swagger_types = {
             'id': int,
             'spec': DownloadSpec,
             'status': str,
-            'is_consumable': bool
+            'is_consumable': bool,
+            'compressed_file_type': str
         }
 
         self.attribute_map = {
             'id': 'id',
             'spec': 'spec',
             'status': 'status',
-            'is_consumable': 'isConsumable'
+            'is_consumable': 'isConsumable',
+            'compressed_file_type': 'compressedFileType'
         }
 
         self._id = id
         self._spec = spec
         self._status = status
         self._is_consumable = is_consumable
+        self._compressed_file_type = compressed_file_type
 
     @classmethod
     def from_dict(cls, dikt):
@@ -152,3 +157,32 @@ class DownloadRequest(Model):
             raise ValueError("Invalid value for `is_consumable`, must not be `None`")  # noqa: E501
 
         self._is_consumable = is_consumable
+
+    @property
+    def compressed_file_type(self):
+        """Gets the compressed_file_type of this DownloadRequest.
+
+        The file type to compress the packages into  # noqa: E501
+
+        :return: The compressed_file_type of this DownloadRequest.
+        :rtype: str
+        """
+        return self._compressed_file_type
+
+    @compressed_file_type.setter
+    def compressed_file_type(self, compressed_file_type):
+        """Sets the compressed_file_type of this DownloadRequest.
+
+        The file type to compress the packages into  # noqa: E501
+
+        :param compressed_file_type: The compressed_file_type of this DownloadRequest.
+        :type compressed_file_type: str
+        """
+        allowed_values = ["7z"]  # noqa: E501
+        if compressed_file_type not in allowed_values:
+            raise ValueError(
+                "Invalid value for `compressed_file_type` ({0}), must be one of {1}"
+                .format(compressed_file_type, allowed_values)
+            )
+
+        self._compressed_file_type = compressed_file_type
