@@ -24,7 +24,7 @@ class SearchController(BaseController):
         yum_base = yum.YumBase()
 
         try:
-            results = yum_base.pkgSack.returnNewestByNameArch(patterns=dl_spec.packages)
+            results = yum_base.pkgSack.returnNewestByName(patterns=dl_spec.packages)
             results = filter(lambda result: result.arch == dl_spec.architecture, results)
 
             results = [{'name': result.name, 'nevraString': result.nevra} for result in results]
