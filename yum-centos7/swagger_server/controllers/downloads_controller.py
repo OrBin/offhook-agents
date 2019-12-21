@@ -151,7 +151,7 @@ class DownloadsController(BaseController):
         attachment_filename = '{requested_pkgs}.{file_type}'.format(requested_pkgs='_'.join(dl_req.spec.packages),
                                                                     file_type=dl_req.compressed_file_type)
 
-        return send_file(processed_req.output_file_path, attachment_filename=attachment_filename)
+        return send_file(processed_req.output_file_path, as_attachment=True, attachment_filename=attachment_filename)
 
     def add_url_rules(self):
         self._add_url_rule('/', self.submit_download_request, methods=['POST'])
