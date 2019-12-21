@@ -4,7 +4,7 @@ import threading
 import time
 import uuid
 import yum
-from flask import request, jsonify, abort
+from flask import request, jsonify, abort, send_file
 from ..models.download_request import DownloadRequest
 from .base_controller import BaseController
 from .zip_helper import compress_files
@@ -139,7 +139,19 @@ class DownloadsController(BaseController):
         :rtype: file
         """
 
-        return 'do some magic!'
+        if request_id not in self.__processed_requests:
+            abort(404)
+
+        processed_req = self.__processed_requests[request_id]
+        dl_req = processed_req.request
+
+        if not dl_req.is_consumable:
+            abort(400, 'Request is not yet consumable')
+
+        attachment_filename = '{requested_pkgs}.{file_type}'.format(requested_pkgs='_'.join(dl_req.spec.packages),
+                                                                    file_type=dl_req.compressed_file_type)
+
+        return send_file(processed_req.output_file_path, attachment_filename=attachment_filename)
 
     def add_url_rules(self):
         self._add_url_rule('/', self.submit_download_request, methods=['POST'])
