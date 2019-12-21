@@ -111,26 +111,26 @@ class DownloadsController(BaseController):
 
         return jsonify(dl_req.to_dict())
 
-    def get_download_request(self, requestId):  # noqa: E501
+    def get_download_request(self, request_id):  # noqa: E501
         """Get a download request
 
          # noqa: E501
 
-        :param requestId: ID of request to return
-        :type requestId: int
+        :param request_id: ID of request to return
+        :type request_id: int
 
         :rtype: DownloadRequest
         """
-        dl_req = self.__processed_requests[requestId].request
+        dl_req = self.__processed_requests[request_id].request
         return jsonify(dl_req.to_dict())
 
-    def get_download_files(self, requestId):  # noqa: E501
+    def get_download_files(self, request_id):  # noqa: E501
         """Get files from a download request
 
          # noqa: E501
 
-        :param requestId: ID of request to get the files for
-        :type requestId: int
+        :param request_id: ID of request to get the files for
+        :type request_id: int
 
         :rtype: file
         """
@@ -139,5 +139,5 @@ class DownloadsController(BaseController):
 
     def add_url_rules(self):
         self._add_url_rule('/', self.submit_download_request, methods=['POST'])
-        self._add_url_rule('/<requestId>', self.get_download_request, methods=['GET'])
-        self._add_url_rule('/<requestId>/files', self.get_download_files, methods=['GET'])
+        self._add_url_rule('/<request_id>', self.get_download_request, methods=['GET'])
+        self._add_url_rule('/<request_id>/files', self.get_download_files, methods=['GET'])
