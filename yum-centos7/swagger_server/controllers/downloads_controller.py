@@ -4,7 +4,7 @@ import threading
 import time
 import uuid
 import yum
-from flask import request, jsonify
+from flask import request, jsonify, abort
 from ..models.download_request import DownloadRequest
 from .base_controller import BaseController
 from .zip_helper import compress_files
@@ -121,6 +121,10 @@ class DownloadsController(BaseController):
 
         :rtype: DownloadRequest
         """
+
+        if request_id not in self.__processed_requests:
+            abort(404)
+
         dl_req = self.__processed_requests[request_id].request
         return jsonify(dl_req.to_dict())
 
