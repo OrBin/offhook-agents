@@ -1,8 +1,6 @@
 import pprint
-
 import six
-
-from swagger_server import util
+from . import util
 
 
 class Model(object):
