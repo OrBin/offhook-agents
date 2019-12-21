@@ -1,9 +1,13 @@
+import os
+import sched
 import threading
+import time
 import uuid
 import yum
 from flask import request, jsonify
 from ..models.download_request import DownloadRequest
 from .base_controller import BaseController
+from .zip_helper import compress_files
 
 
 class ProcessedRequest:
@@ -26,12 +30,16 @@ class ProcessedRequest:
 
 class DownloadsController(BaseController):
 
+    OUTPUT_FILE_TEMPLATE = '/opt/offhook/outputs/{request_id}.{compressed_file_type}'
+    REQUEST_KEEPING_TIMEOUT_SEC = 60 * 60 * 2  # 2 hours
+
     def __init__(self, *args):
         super(DownloadsController, self).__init__(*args)
         self.__processed_requests = {}
+        self.__scheduler = sched.scheduler(time.time, time.sleep)
 
     @staticmethod
-    def __get_package_list(yum_base):
+    def _get_package_list(yum_base):
         dlpkgs = map(lambda x: x.po, filter(lambda txmbr:
                                             txmbr.ts_state in ("i", "u"),
                                             yum_base.tsInfo.getMembers()))
@@ -43,23 +51,38 @@ class DownloadsController(BaseController):
 
         yb.install(results[0])
         yb.resolveDeps()
-        all_packages = self.__get_package_list(yb)
+        all_packages = self._get_package_list(yb)
         yb.downloadPkgs(all_packages)
 
         package_local_paths = [pkg.localpath for pkg in all_packages]
         return package_local_paths
 
-    def _handle_request(self, request_id):
-        request = self.__processed_requests[request_id].request
-        request.status = 'Downloading'
-        package_local_paths = self._download_packages(request.spec.packages)
-        request.status = 'Compressing'
-        # TODO Compress
-        # TODO Remove original packages
-        request.status = 'Ready'
-        request.is_consumable = True
+    def _delete_request(self, request_id):
+        processed_request = self.__processed_requests.pop(request_id, None)
+        os.remove(processed_request.output_file_path)
 
-        # TODO Schedule deleting request and removing output file
+    def _handle_request(self, request_id):
+        req = self.__processed_requests[request_id].request
+        req.status = 'Downloading'
+        package_local_paths = self._download_packages(req.spec.packages)
+        req.status = 'Compressing'
+
+        self.__processed_requests[request_id].output_file_path = self.OUTPUT_FILE_TEMPLATE.format(
+            request_id=request_id,
+            compressed_file_type=req.compressed_file_type
+        )
+
+        compress_files(req.compressed_file_type,
+                       package_local_paths,
+                       self.__processed_requests[request_id].output_file_path,
+                       password=None)
+
+        req.status = 'Ready'
+        req.is_consumable = True
+
+        self.__scheduler.enter(self.REQUEST_KEEPING_TIMEOUT_SEC, 1, self._delete_request, (request_id,))
+        self.__scheduler.run()
+
 
     def submit_download_request(self):  # noqa: E501
         """Submit a download request
@@ -111,8 +134,6 @@ class DownloadsController(BaseController):
 
         :rtype: file
         """
-
-        #searchword = request.args.get('fileType', '')
 
         return 'do some magic!'
 

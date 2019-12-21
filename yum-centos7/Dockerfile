@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 COPY requirements.txt /usr/src/app/
 
 RUN yum install -y epel-release \
-    && yum install -y python-pip \
+    && yum install -y python-pip p7zip p7zip-plugins \
     && pip install --no-cache-dir -r requirements.txt \
     && pip install gunicorn==19.10.0
 
