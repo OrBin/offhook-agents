@@ -1,5 +1,5 @@
 import yum
-from flask import request, jsonify
+from flask import request, jsonify, abort
 from yum.Errors import PackageSackError
 from ..models.download_spec import DownloadSpec  # noqa: E501
 from .base_controller import BaseController
@@ -19,6 +19,9 @@ class SearchController(BaseController):
         """
 
         dl_spec = DownloadSpec.from_dict(request.json)
+
+        if not dl_spec.architecture:
+            abort(400, 'Architecture must be specified')
 
         # YumBase object must be created on each call, since its package sack cannot be used from multiple threads
         yum_base = yum.YumBase()

@@ -97,6 +97,10 @@ class DownloadsController(BaseController):
 
         dl_req = DownloadRequest.from_dict(request.json)
 
+        if not dl_req.spec.architecture:
+            abort(400, 'Architecture must be specified')
+
+
         dl_req.is_consumable = False
         dl_req.status = 'Submitted'
 
