@@ -12,15 +12,13 @@ class DownloadSpec(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, source=None, os=None, os_variant=None, architecture=None, packages=None):  # noqa: E501
+    def __init__(self, source=None, os=None, architecture=None, packages=None):  # noqa: E501
         """DownloadSpec - a model defined in Swagger
 
         :param source: The source of this DownloadSpec.  # noqa: E501
         :type source: str
         :param os: The os of this DownloadSpec.  # noqa: E501
         :type os: str
-        :param os_variant: The os_variant of this DownloadSpec.  # noqa: E501
-        :type os_variant: str
         :param architecture: The architecture of this DownloadSpec.  # noqa: E501
         :type architecture: str
         :param packages: The packages of this DownloadSpec.  # noqa: E501
@@ -29,7 +27,6 @@ class DownloadSpec(Model):
         self.swagger_types = {
             'source': str,
             'os': str,
-            'os_variant': str,
             'architecture': str,
             'packages': List[str]
         }
@@ -37,14 +34,12 @@ class DownloadSpec(Model):
         self.attribute_map = {
             'source': 'source',
             'os': 'os',
-            'os_variant': 'osVariant',
             'architecture': 'architecture',
             'packages': 'packages'
         }
 
         self._source = source
         self._os = os
-        self._os_variant = os_variant
         self._architecture = architecture
         self._packages = packages
 
@@ -104,27 +99,6 @@ class DownloadSpec(Model):
             raise ValueError("Invalid value for `os`, must not be `None`")  # noqa: E501
 
         self._os = os
-
-    @property
-    def os_variant(self):
-        """Gets the os_variant of this DownloadSpec.
-
-
-        :return: The os_variant of this DownloadSpec.
-        :rtype: str
-        """
-        return self._os_variant
-
-    @os_variant.setter
-    def os_variant(self, os_variant):
-        """Sets the os_variant of this DownloadSpec.
-
-
-        :param os_variant: The os_variant of this DownloadSpec.
-        :type os_variant: str
-        """
-
-        self._os_variant = os_variant
 
     @property
     def architecture(self):

@@ -110,10 +110,7 @@ definitions:
         example: "yum"
       os:
         type: "string"
-        example: "linux"
-      osVariant:
-        type: "string"
-        example: "RHEL7"
+        example: "el7"
       architecture:
         type: "string"
         example: "x86_64"
