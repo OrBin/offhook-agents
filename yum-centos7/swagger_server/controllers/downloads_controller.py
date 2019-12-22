@@ -98,8 +98,7 @@ class DownloadsController(BaseController):
         dl_req = DownloadRequest.from_dict(request.json)
 
         if not dl_req.spec.architecture:
-            abort(400, 'Architecture must be specified')
-
+            return abort(400, 'Architecture must be specified')
 
         dl_req.is_consumable = False
         dl_req.status = 'Submitted'
@@ -127,7 +126,7 @@ class DownloadsController(BaseController):
         """
 
         if request_id not in self.__processed_requests:
-            abort(404)
+            return abort(404)
 
         dl_req = self.__processed_requests[request_id].request
         return jsonify(dl_req.to_dict())
@@ -144,13 +143,13 @@ class DownloadsController(BaseController):
         """
 
         if request_id not in self.__processed_requests:
-            abort(404)
+            return abort(404)
 
         processed_req = self.__processed_requests[request_id]
         dl_req = processed_req.request
 
         if not dl_req.is_consumable:
-            abort(400, 'Request is not yet consumable')
+            return abort(400, 'Request is not yet consumable')
 
         attachment_filename = '{requested_pkgs}.{file_type}'.format(requested_pkgs='_'.join(dl_req.spec.packages),
                                                                     file_type=dl_req.compressed_file_type)
