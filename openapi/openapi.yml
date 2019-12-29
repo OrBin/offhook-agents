@@ -118,7 +118,7 @@ definitions:
         type: "array"
         items:
           type: "string"
-          description: "Package name or NEVRA"
+          description: "Package name or full name"
         example:
         - "gcc"
         - "gcc-0:4.8.5-39.el7.x86_64"
@@ -155,12 +155,12 @@ definitions:
     type: "object"
     required:
     - "name"
-    - "nevraString"
+    - "fullName"
     properties:
       name:
         type: "string"
         example: "gcc"
-      nevraString:
+      fullName:
         type: "string"
         example: "gcc-0:4.8.5-39.el7.x86_64"
-        description: "NEVRA (Name, Epoch, Version, Revision, Architecture) of the package"
+        description: "A fully-describing name of the package"
