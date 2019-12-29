@@ -30,7 +30,7 @@ class SearchController(BaseController):
             results = yum_base.pkgSack.returnNewestByName(patterns=dl_spec.packages)
             results = filter(lambda result: result.arch == dl_spec.architecture, results)
 
-            results = [{'name': result.name, 'nevraString': result.nevra} for result in results]
+            results = [{'name': result.name, 'fullName': result.nevra} for result in results]
         except PackageSackError:
             results = []
 
